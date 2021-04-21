@@ -16,6 +16,7 @@ import { GetStaticProps } from "next"
 import { api } from "../services/api";
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString";
 import Image from "next/image";
+import Link from "next/link";
 
 import styles from "./home.module.scss"
 
@@ -56,7 +57,9 @@ export default function Home({ latestEpisodes, allEpisodes}: HomeProps) {
                 />
 
                 <div className={styles.episodeDetails}>
-                  <a>{episode.title}</a>
+                  <Link href={`/episode/${episode.id}`}>
+                    <a>{episode.title}</a>
+                  </Link>
                   <p>{episode.members}</p>
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
@@ -98,7 +101,9 @@ export default function Home({ latestEpisodes, allEpisodes}: HomeProps) {
                     />
                   </td>
                   <td>
-                    <a>{episode.title}</a>
+                    <Link href={`/episode/${episode.id}`}>
+                      <a>{episode.title}</a>
+                    </Link>
                   </td>
                   <td>{episode.members}</td>
                   <td style={{ width: 100 }}>{episode.publishedAt}</td>
