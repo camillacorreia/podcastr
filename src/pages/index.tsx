@@ -10,6 +10,7 @@ useEffect(()=>{
 //SSR - getServerSideProps - faz a chamada sempre que entrar na página, mas só renderiza depois que tiver os dados e indexa ao google
 //SSG - getStaticProps - só funciona em produção, consegue setar intervalos de chamadas ao back
 
+import { useContext } from 'react';
 import { format, parseISO } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { GetStaticProps } from "next"
@@ -19,6 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "./home.module.scss"
+import { PlayerContext } from "../contexts/PlayerContext";
 
 type Episode = {
   id: string;
@@ -39,6 +41,8 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes}: HomeProps) {
+  const { play } = useContext(PlayerContext);
+  
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
@@ -65,7 +69,7 @@ export default function Home({ latestEpisodes, allEpisodes}: HomeProps) {
                   <span>{episode.durationAsString}</span>
                 </div>
 
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                   <img src="/play-green.svg" alt="Tocar episódio"/>
                 </button>
               </li>
